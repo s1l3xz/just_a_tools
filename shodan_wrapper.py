@@ -28,7 +28,7 @@ def domain_resolver(domain_list):
             broked_domain.append(i)
             continue
 
-    if broked_domain.__sizeof__() > 0:
+    if len(broked_domain) > 0:
         print "not resolved domain"
         for domain in broked_domain:
             print domain
