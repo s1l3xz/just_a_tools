@@ -14,8 +14,7 @@ domains = [
 #my_super_domain.com,
 ]
 
-
-
+out_of_shodan_address = []
 
 def domain_resolver(domain_list):
     resolved_ip = []
@@ -29,15 +28,24 @@ def domain_resolver(domain_list):
             continue
 
     if len(broked_domain) > 0:
-        print "not resolved domain"
+        print "\n not resolved domain:"
         for domain in broked_domain:
             print domain
 
-    print "start shodan scan"
+    print "\n start shodan scan"
     for domain in resolved_ip:
         print "A"*100
         shodan_scan_full(domain)
         print "B" * 100
+
+    print "\n full address:"
+    for i in resolved_ip:
+        print i
+
+    if len(out_of_shodan_address) > 0 :
+        print "\n not in shodan db address:"
+        for i in out_of_shodan_address:
+            print i
 
 def shodan_scan_full(ip):
     print ip
@@ -47,6 +55,8 @@ def shodan_scan_full(ip):
             print """%s: %s""" %(i, host[i])
 
     except:
+        out_of_shodan_address.append(ip)
         print "Error: No information available for that IP."
+
 if __name__ == "__main__":
     domain_resolver(domains)
